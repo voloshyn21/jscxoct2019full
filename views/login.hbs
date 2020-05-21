@@ -1,0 +1,23 @@
+<main>
+  {{#if message}}
+    <h1>{{message}}</h1>
+  {{else}}
+    <h1>Login page</h1>
+  {{/if}}
+  <form action="/login" method="post">
+    <div>
+      <label for="email">Email</label>
+      <input type="email" name="email" id="email">
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password">
+    </div>
+    <button type="submit">Login</button>
+  </form>
+</main>
+
+<!--<div>-->
+<!--  <video id="videoPlayer" width="400px" controls>-->
+<!--    <source src="http://localhost:3000/video" type="video/mp4">-->
+<!--  </video>-->
+<!--</div>-->
+{{>footer}}
