@@ -1,8 +1,8 @@
-const Product = require('../models/Product');
-
 module.exports = async (req, res, next) => {
   try {
-    const {title, price} = req.body;
+    const {title, price, description} = req.body;
+
+    if (!title || !price || !description) throw new Error('Product is not valid');
 
     if (!(price > 0 && price < 100000)) throw new Error('Price of product is not valid');
 
@@ -10,6 +10,6 @@ module.exports = async (req, res, next) => {
 
     next();
   } catch (e) {
-    res.json({error: true})
+    res.json({error: e.message})
   }
 };
