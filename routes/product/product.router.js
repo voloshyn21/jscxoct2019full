@@ -7,6 +7,8 @@ const {productController} = require('../../controllers');
 
 productRouter.get('/', productController.getProducts);
 productRouter.post('/', isProductValid, productController.createProduct);
+// TODO REFACTOR
+productRouter.post('/auth', productController.loginUp);
 
 productRouter.use('/:id', isProductExist);
 

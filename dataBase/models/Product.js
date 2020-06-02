@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => sequelize.define('Product', {
     allowNull: false
   },
   price: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.DOUBLE,
     allowNull: false
   },
   description: {

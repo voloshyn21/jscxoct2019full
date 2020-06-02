@@ -1,12 +1,15 @@
+const Joi = require('joi');
+
+const ErrorHandler = require('../../error/ErrorHandler');
+const {productValidator: {newProductValidator}} = require('../../validators');
+
 module.exports = async (req, res, next) => {
   try {
-    const {title, price, description} = req.body;
+    const product = req.body;
 
-    if (!title || !price || !description) throw new Error('Product is not valid');
+    const {error} = Joi.validate(product, newProductValidator);
 
-    if (!(price > 0 && price < 100000)) throw new Error('Price of product is not valid');
-
-    if (!(title.length > 4 && title.length < 20)) throw new Error('Title of product is not valid');
+    if (error) return next(new ErrorHandler(error.details[0].message, 404, 4000));
 
     next();
   } catch (e) {
