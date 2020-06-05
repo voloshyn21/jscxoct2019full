@@ -1,3 +1,5 @@
 module.exports = {
-  PRODUCT: 'Product'
+  PRODUCT: 'Product',
+  USER: 'User',
+  TOKEN: 'Token'
 };

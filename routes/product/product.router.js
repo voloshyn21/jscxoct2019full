@@ -1,24 +1,17 @@
 const productRouter = require('express').Router();
 
-const {isProductExist, isProductValid} = require('../../middlewares');
-
 const {productController} = require('../../controllers');
+const {productMiddlewares: {isProductValid, isProductExist}} = require('../../middlewares');
 
 
-productRouter.get('/', productController.getProducts);
 productRouter.post('/', isProductValid, productController.createProduct);
-// TODO REFACTOR
-productRouter.post('/auth', productController.loginUp);
+productRouter.get('/', productController.getProducts);
 
-productRouter.use('/:id', isProductExist);
+productRouter.use('/:productId', isProductExist);
 
-productRouter.get('/:id', productController.getProduct);
-productRouter.put('/:id', isProductValid, productController.updateProduct);
-productRouter.delete('/:id', productController.deleteProduct);
-
-// productRouter.get('/:id', isProductExist, productController.getProduct);
-// productRouter.put('/:id', isProductExist, isProductValid, productController.updateProduct);
-// productRouter.delete('/:id', isProductExist, productController.deleteProduct);
+productRouter.get('/:productId', productController.getProduct);
+productRouter.put('/:productId', isProductValid, productController.updateProduct);
+productRouter.delete('/:productId', productController.deleteProduct);
 
 
 module.exports = productRouter;

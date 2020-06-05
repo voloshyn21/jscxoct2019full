@@ -5,13 +5,13 @@ const {
   responseCustomErrorEnum: {NOT_VALID}
 } = require('../../constants');
 const {ErrorHandler} = require('../../errors');
-const {productValidator: {newProductSchema}} = require('../../validators');
+const {userValidator: {newUserSchema}} = require('../../validators');
 
 
-module.exports = async (req, res, next) => {
+module.exports = (req, res, next) => {
   try {
-    const product = req.body;
-    const {error} = Joi.validate(product, newProductSchema);
+    const user = req.body;
+    const {error} = Joi.validate(user, newUserSchema);
 
     if (error) return next(new ErrorHandler(error.details[0].message, BAD_REQUEST, NOT_VALID.customCode));
 

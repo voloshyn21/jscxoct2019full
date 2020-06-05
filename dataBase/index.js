@@ -2,14 +2,18 @@ const Sequelize = require('sequelize');
 const fs = require('fs');
 const path = require('path');
 
+
 module.exports = (() => {
   let instance;
 
   function initConnection() {
-    const client = new Sequelize('shop', 'root', 'root1234', {
-      host: 'localhost',
-      dialect: 'mysql'
-    });
+    const client = new Sequelize(
+      process.env.DB_NAME || 'shop',
+      process.env.DB_USER || 'root',
+      process.env.DB_PASSWORD || 'root', {
+        host: process.env.DB_HOST || 'localhost',
+        dialect: 'mysql'
+      });
 
     let models = {};
 
@@ -24,9 +28,8 @@ module.exports = (() => {
 
     return {
       setModels: () => getModels(),
-      getModels: (modelName) => models[modelName]
+      getModel: (modelName) => models[modelName]
     }
-
   }
 
   return {
@@ -35,5 +38,4 @@ module.exports = (() => {
       return instance;
     }
   }
-
 })();

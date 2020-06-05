@@ -1,2 +1,3 @@
-module.exports.isProductExist = require('./product/isProductExist');
-module.exports.isProductValid = require('./product/isProductValid');
+module.exports.authMiddlewares = require('./auth');
+module.exports.productMiddlewares = require('./product');
+module.exports.userMiddlewares = require('./user');

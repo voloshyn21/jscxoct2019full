@@ -1,4 +1,7 @@
-module.exports = (sequelize, DataTypes) => sequelize.define('Product', {
+const {modelNameEnum: {PRODUCT}} = require('../../constants');
+
+
+module.exports = (sequelize, DataTypes) => sequelize.define(PRODUCT, {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -6,7 +9,6 @@ module.exports = (sequelize, DataTypes) => sequelize.define('Product', {
   },
   title: {
     type: DataTypes.STRING,
-    unique: true,
     allowNull: false
   },
   price: {

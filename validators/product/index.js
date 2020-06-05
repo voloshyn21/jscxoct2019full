@@ -1,1 +1,1 @@
-module.exports.newProductValidator = require('./new-product.validator');
+module.exports.newProductSchema = require('./newProduct.validator');
