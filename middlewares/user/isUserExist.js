@@ -14,7 +14,7 @@ module.exports = async (req, res, next) => {
     const {userId} = req.params;
     const {error} = Joi.validate(userId, numberIdSchema);
 
-    if (error) return next(new ErrorHandler(NOT_VALID.message, BAD_REQUEST, NOT_VALID.customCode));
+    if (error) return next(new ErrorHandler(error.details[0].message, BAD_REQUEST, NOT_VALID.customCode));
 
     const user = await userService.getOne(userId);
 
