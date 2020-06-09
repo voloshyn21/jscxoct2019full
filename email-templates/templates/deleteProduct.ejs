@@ -1,0 +1,8 @@
+<%- include('../includes/header.ejs') %>
+<div class=pokemons>
+    <h1>DEAR <%= user.name %> <%= user.surname %>!</h1>
+    <h2>YOU DELETED THIS PRODUCT 😢</h2>
+    <p><%= product.title %> – <%= product.price %>$</p>
+    <p><%= product.description %></p>
+</div>
+<%- include('../includes/footer.ejs', {SITE}) %>

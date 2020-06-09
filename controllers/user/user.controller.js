@@ -1,22 +1,26 @@
 const {
   responseStatusCodeEnum: {CREATED, NO_CONTENT, OK, NOT_FOUND: NOT_FOUND_CODE},
-  responseCustomErrorEnum: {NOT_CREATED, NOT_GET, NOT_UPDATE, NOT_DELETE}
+  responseCustomErrorEnum: {NOT_CREATED, NOT_GET, NOT_UPDATE, NOT_DELETE},
+  emailActionEnum: {USER_REGISTER, USER_DELETE, USER_UPDATE}
 } = require('../../constants');
 const {ErrorHandler} = require('../../errors');
-const {userService} = require('../../services');
 const {hash: {hashUserPassword}} = require('../../helpers');
+const {emailService, userService} = require('../../services');
 
 
 module.exports = {
   createUser: async (req, res, next) => {
     try {
       const user = req.body;
+      const password = user.password;
 
       user.password = await hashUserPassword(user.password);
 
       const isCreated = await userService.create(user);
 
       if (!isCreated) return next(new ErrorHandler(NOT_CREATED.message, NOT_FOUND_CODE, NOT_CREATED.customCode));
+
+      await emailService.sendMail(user.email, USER_REGISTER, {user, password});
 
       res.sendStatus(CREATED);
     } catch (e) {
@@ -49,12 +53,15 @@ module.exports = {
     try {
       const {userId} = req.params;
       const user = req.body;
+      const userFromDB = await userService.getOne(userId);
 
       user.password = await hashUserPassword(user.password);
 
       const [isUpdated] = await userService.update(userId, user);
 
       if (!isUpdated) return next(new ErrorHandler(NOT_UPDATE.message, NOT_FOUND_CODE, NOT_UPDATE.customCode));
+
+      await emailService.sendMail(userFromDB.email, USER_UPDATE, {user})
 
       res.sendStatus(OK);
     } catch (e) {
@@ -70,9 +77,12 @@ module.exports = {
 
     try {
       const {userId} = req.params;
+      const user = await userService.getOne(userId);
       const isDeleted = await userService.delete(userId)
 
       if (!isDeleted) return next(new ErrorHandler(NOT_DELETE.message, NOT_FOUND_CODE, NOT_DELETE.customCode));
+
+      await emailService.sendMail(user.email, USER_DELETE, {userName: user.name, userSurname: user.surname});
 
       res.sendStatus(NO_CONTENT);
     } catch (e) {

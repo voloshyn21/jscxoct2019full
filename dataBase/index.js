@@ -2,18 +2,17 @@ const Sequelize = require('sequelize');
 const fs = require('fs');
 const path = require('path');
 
+const {DB_NAME, DB_HOST, DB_USER, DB_PASSWORD,} = require('../configs');
+
 
 module.exports = (() => {
   let instance;
 
   function initConnection() {
-    const client = new Sequelize(
-      process.env.DB_NAME || 'shop',
-      process.env.DB_USER || 'root',
-      process.env.DB_PASSWORD || 'root', {
-        host: process.env.DB_HOST || 'localhost',
-        dialect: 'mysql'
-      });
+    const client = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
+      host: DB_HOST,
+      dialect: 'mysql'
+    });
 
     let models = {};
 
