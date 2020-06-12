@@ -5,3 +5,4 @@ module.exports.emailActionEnum = require('./emailAction.enum');
 module.exports.requestHeaderEnum = require('./requestHeader.enum');
 module.exports.responseStatusCodeEnum = require('./responseStatusCode.enum');
 module.exports.responseCustomErrorEnum = require('./responseCustomError.enum');
+module.exports.fileMimeTypeEnum = require('./fileMimeType.enum');

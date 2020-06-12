@@ -22,8 +22,6 @@ module.exports = async (req, res, next) => {
 
     req.product = product;
 
-    await product.destroy();
-
     next();
   } catch (e) {
     next(e);

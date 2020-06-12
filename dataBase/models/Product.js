@@ -18,6 +18,13 @@ module.exports = (sequelize, DataTypes) => sequelize.define(PRODUCT, {
   description: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  photo: {
+    type: DataTypes.STRING
+  },
+  userId: {
+    type: DataTypes.INTEGER,
+    allowNull: false
   }
 }, {
   tableName: 'products',

@@ -26,5 +26,10 @@ module.exports = {
   delete: (id) => {
     const ProductModel = db.getModel(PRODUCT);
     return ProductModel.destroy({where: {id}});
+  },
+
+  findAllByParams: (params) => {
+    const ProductModel = db.getModel(PRODUCT);
+    return ProductModel.findAll({where: params})
   }
 };

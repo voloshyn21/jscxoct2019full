@@ -1,3 +1,6 @@
+const logger = require('./winston');
+
+
 module.exports = {
   PORT: process.env.PORT || 3000,
 
@@ -15,5 +18,7 @@ module.exports = {
   EMAIL_LOGIN: process.env.EMAIL_LOGIN || 'mail@mail.com',
   EMAIL_PASSWORD: process.env.EMAIL_PASSWORD || 'Password1234',
 
-  SITE: process.env.SITE || 'site.com'
+  SITE: process.env.SITE || 'site.com',
+
+  logger
 };

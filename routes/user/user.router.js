@@ -1,10 +1,13 @@
 const userRouter = require('express').Router();
 
 const {userController} = require('../../controllers');
-const {userMiddlewares: {isUserValid, isUserExist}} = require('../../middlewares');
+const {
+  userMiddlewares: {isUserValid, isUserExist},
+  fileMiddlewares: {checkFile, checkPhotoCount}
+} = require('../../middlewares');
 
 
-userRouter.post('/', isUserValid, userController.createUser);
+userRouter.post('/', isUserValid, checkFile, checkPhotoCount, userController.createUser);
 userRouter.get('/', userController.getUsers);
 
 userRouter.use('/:userId', isUserExist);

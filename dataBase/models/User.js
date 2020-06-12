@@ -23,6 +23,9 @@ module.exports = (sequelize, DataTypes) => sequelize.define(USER, {
   password: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  photo: {
+    type: DataTypes.STRING
   }
 }, {
   tableName: 'users',

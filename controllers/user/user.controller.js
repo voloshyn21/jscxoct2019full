@@ -1,3 +1,7 @@
+const path = require('path');
+const uuid = require('uuid').v1();
+const fsep = require('fs-extra').promises;
+
 const {
   responseStatusCodeEnum: {CREATED, NO_CONTENT, OK, NOT_FOUND: NOT_FOUND_CODE},
   responseCustomErrorEnum: {NOT_CREATED, NOT_GET, NOT_UPDATE, NOT_DELETE},
@@ -12,13 +16,24 @@ module.exports = {
   createUser: async (req, res, next) => {
     try {
       const user = req.body;
+      const [profileImage] = req.photos;
       const password = user.password;
 
       user.password = await hashUserPassword(user.password);
 
-      const isCreated = await userService.create(user);
+      const isUserCreated = await userService.create(user);
 
-      if (!isCreated) return next(new ErrorHandler(NOT_CREATED.message, NOT_FOUND_CODE, NOT_CREATED.customCode));
+      if (!isUserCreated) return next(new ErrorHandler(NOT_CREATED.message, NOT_FOUND_CODE, NOT_CREATED.customCode));
+
+      if (profileImage) {
+        const photoDir = `users/${isUserCreated.id}/photos/`;
+        const fileExtension = path.extname(profileImage.name);
+        const photoName = uuid + fileExtension;
+
+        await fsep.mkdir(path.resolve(process.cwd(), 'public', photoDir), {recursive: true});
+        await profileImage.mv(path.resolve(process.cwd(), 'public', photoDir, photoName));
+        await userService.update(isUserCreated.id, {photo: photoDir + photoName})
+      }
 
       await emailService.sendMail(user.email, USER_REGISTER, {user, password});
 
