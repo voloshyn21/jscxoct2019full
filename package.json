@@ -14,7 +14,7 @@
     "express": "^4.17.1",
     "mysql2": "^2.1.0",
     "sequelize": "^5.21.11",
-    "bcrypt": "^4.0.1",
+    "bcrypt": "^5.0.0",
     "joi": "^14.3.1",
     "dotenv": "^8.2.0",
     "jsonwebtoken": "^8.5.1",
